@@ -13,7 +13,6 @@ export class UserController {
   // 注册
   @Post('register')
   async register(@Body() registerUser: RegisterUserDto) {
-    delete registerUser?.captcha;
-    return await this.userService.create(registerUser);
+    return await this.userService.register(registerUser);
   }
 }
