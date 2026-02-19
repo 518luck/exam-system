@@ -9,6 +9,7 @@ import {
 import { RedisService } from '@app/redis';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
+import { UpdateUserPasswordDto } from './dto/update-user-password.dto';
 
 @Injectable()
 export class UserService {
@@ -83,5 +84,43 @@ export class UserService {
     }
 
     return foundUser;
+  }
+
+  // 更新密码
+  async updatePassword(passwordDto: UpdateUserPasswordDto) {
+    const captcha = await this.redisService.get(
+      `update_password_captcha_${passwordDto.email}`,
+    );
+
+    if (!captcha) {
+      throw new HttpException('验证码已失效', HttpStatus.BAD_REQUEST);
+    }
+
+    if (passwordDto.captcha !== captcha) {
+      throw new HttpException('验证码不正确', HttpStatus.BAD_REQUEST);
+    }
+
+    const foundUser = await this.prismaService.user.findUnique({
+      where: {
+        username: passwordDto.username,
+      },
+    });
+    if (!foundUser) {
+      throw new HttpException('用户不存在', HttpStatus.BAD_REQUEST);
+    }
+    foundUser.password = passwordDto.password;
+
+    try {
+      await this.prismaService.user.update({
+        where: {
+          id: foundUser.id,
+        },
+        data: foundUser,
+      });
+      return '密码修改成功';
+    } catch (e) {
+      this.logger.error(e, UserService);
+      return '密码修改失败';
+    }
   }
 }
