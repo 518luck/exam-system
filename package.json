@@ -29,6 +29,7 @@
     "@nestjs/core": "^11.0.1",
     "@nestjs/microservices": "^11.1.14",
     "@nestjs/platform-express": "^11.0.1",
+    "@prisma/adapter-mariadb": "^7.4.0",
     "dotenv": "^17.3.1",
     "redis": "^5.11.0",
     "reflect-metadata": "^0.2.2",
@@ -81,6 +82,7 @@
       "<rootDir>/libs/"
     ],
     "moduleNameMapper": {
+      "^@app/prisma(|/.*)$": "<rootDir>/libs/prisma/src/$1",
       "^@app/redis(|/.*)$": "<rootDir>/libs/redis/src/$1"
     }
   }
