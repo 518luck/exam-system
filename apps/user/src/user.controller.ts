@@ -5,6 +5,7 @@ import { RegisterUserDto } from './dto/register-user.dto';
 import { EmailService } from '@app/email';
 import { LoginUserDto } from './dto/login-user.dto';
 import { JwtService } from '@nestjs/jwt';
+import { RequireLogin, UserInfo } from '@app/common';
 
 @Controller('user')
 export class UserController {
@@ -58,5 +59,17 @@ export class UserController {
       newFoundUser,
       token,
     };
+  }
+
+  @Get('aaa')
+  @RequireLogin()
+  aaa(@UserInfo() userInfo, @UserInfo('username') username) {
+    console.log(userInfo, username);
+    return 'aaa';
+  }
+
+  @Get('bbb')
+  bbb() {
+    return 'bbb';
   }
 }
