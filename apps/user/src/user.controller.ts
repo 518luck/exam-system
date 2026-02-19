@@ -4,6 +4,7 @@ import { RedisService } from '@app/redis';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { EmailService } from '@app/email';
 import { LoginUserDto } from './dto/login-user.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Controller('user')
 export class UserController {
@@ -11,6 +12,7 @@ export class UserController {
     private readonly emailService: EmailService,
     private readonly userService: UserService,
     private readonly redisService: RedisService,
+    private readonly jwtService: JwtService,
   ) {}
 
   // 获取注册验证码
@@ -42,6 +44,19 @@ export class UserController {
       ...foundUser,
       password: undefined,
     };
-    return newFoundUser;
+    // 登录成功后，生成 JWT  token
+    const token = this.jwtService.sign(
+      {
+        userId: newFoundUser.id,
+        username: newFoundUser.username,
+      },
+      {
+        expiresIn: '7d',
+      },
+    );
+    return {
+      newFoundUser,
+      token,
+    };
   }
 }
