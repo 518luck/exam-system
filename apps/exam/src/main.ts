@@ -19,6 +19,8 @@ async function bootstrap() {
   // 启动微服务
   await app.startAllMicroservices();
 
+  app.enableCors();
+
   await app.listen(3002);
 }
 void bootstrap();
