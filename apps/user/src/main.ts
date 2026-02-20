@@ -15,7 +15,8 @@ async function bootstrap() {
       transform: true,
     }),
   );
-
+  // 开启跨域
+  app.enableCors();
   await app.listen(3001);
 }
 void bootstrap();
