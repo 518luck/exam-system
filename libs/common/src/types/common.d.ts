@@ -1,4 +1,4 @@
-import { Request } from 'express';
+import type { Request } from 'express';
 import type { JwtUserData } from './jwt';
 //declare 描述那些不是由 TypeScript 编写、但在运行时确实存在的代码的方式。
 // declare的四种语法
