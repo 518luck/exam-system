@@ -61,4 +61,11 @@ export class ExamController {
   publish(@UserInfo('userId') userId: number, @Param('id') id: string) {
     return this.examService.publish(userId, +id);
   }
+
+  // 取消发布考试
+  @Get('unpublish/:id')
+  @RequireLogin()
+  unpublish(@UserInfo('userId') userId: number, @Param('id') id: string) {
+    return this.examService.unpublish(userId, +id);
+  }
 }

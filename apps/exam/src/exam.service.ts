@@ -92,4 +92,17 @@ export class ExamService {
       },
     });
   }
+
+  // 取消发布考试
+  async unpublish(userId: number, id: number) {
+    return this.prismaService.exam.update({
+      where: {
+        id,
+        createUserId: userId,
+      },
+      data: {
+        isPublish: false,
+      },
+    });
+  }
 }
