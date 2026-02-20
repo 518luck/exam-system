@@ -16,9 +16,25 @@ datasource db {
 
 model User {
   id         Int      @id @default(autoincrement())
-  username   String   @unique @db.VarChar(50)
-  password   String   @db.VarChar(50)
-  email      String   @db.VarChar(50)
-  createTime DateTime @default(now())
-  updateTime DateTime @updatedAt
+  username   String   @unique @db.VarChar(50) // 用户名
+  password   String   @db.VarChar(50) // 密码
+  email      String   @db.VarChar(50) // 邮箱
+  createTime DateTime @default(now()) // 创建时间
+  updateTime DateTime @updatedAt // 更新时间
+  exams      Exam[]
+}
+
+model Exam {
+  id         Int      @id @default(autoincrement())
+  name       String   @db.VarChar(50) // 考试名称
+  isPublish  Boolean  @default(false) // 是否发布
+  isDelete   Boolean  @default(false) // 是否删除
+  content    String   @db.Text // 试卷内容 JSON
+  createTime DateTime @default(now()) // 创建时间
+  updateTime DateTime @updatedAt // 更新时间
+
+  createUserId Int //真实存在的字段   创建者ID
+  createUser   User @relation(fields: [createUserId], references: [id]) //虚拟字段。它在数据库表中不存在，只存在于你的 Prisma 代码中。
+  //fields: [createUserId]：告诉 Prisma，当前模型里的 createUserId 这个字段是用来关联的。
+  //references: [id]：告诉 Prisma，它关联的是 User 模型里的 id 字段。
 }
