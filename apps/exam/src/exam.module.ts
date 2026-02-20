@@ -3,11 +3,11 @@ import { ExamController } from './exam.controller';
 import { ExamService } from './exam.service';
 import { RedisModule } from '@app/redis';
 import { APP_GUARD } from '@nestjs/core';
-import { AuthGuard } from '@app/common';
+import { AuthGuard, CommonModule } from '@app/common';
 import { PrismaModule } from '@app/prisma';
 
 @Module({
-  imports: [RedisModule, PrismaModule],
+  imports: [RedisModule, PrismaModule, CommonModule],
   controllers: [ExamController],
   providers: [
     ExamService,

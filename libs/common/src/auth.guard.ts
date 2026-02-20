@@ -8,8 +8,9 @@ import {
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { Observable } from 'rxjs';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import type { JwtUserData } from './types/jwt';
+import type { AuthRequest } from './types/common';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -22,7 +23,7 @@ export class AuthGuard implements CanActivate {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    const request: Request = context.switchToHttp().getRequest();
+    const request: AuthRequest = context.switchToHttp().getRequest();
     const response: Response = context.switchToHttp().getResponse();
 
     /** * 从当前 Handler（方法）和 Class（控制器）中提取 'require-login' 元数据。

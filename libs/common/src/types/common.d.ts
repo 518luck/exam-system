@@ -6,8 +6,14 @@ import type { JwtUserData } from './jwt';
 // 2. 描述全局函数 declare function 函数名(参数: 类型): 返回类型;
 // 3. 描述全局类 declare class 类名 { 属性: 类型; 方法(): 类型; }
 // 4. 描述全局接口 declare module '模块名' { ...内容... }
-declare module 'express' {
-  interface Request {
-    user: JwtUserData;
-  }
+// declare module 'express' {
+//   interface Request {
+//     user: JwtUserData;
+//   }
+// }
+// 这个总是报错
+
+// 定义一个增强版的 Request 类型
+export interface AuthRequest extends Request {
+  user: JwtUserData;
 }
