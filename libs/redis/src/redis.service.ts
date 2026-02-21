@@ -24,4 +24,23 @@ export class RedisService {
       await this.redisClient.expire(key, ttl);
     }
   }
+
+  // 获取有序集合的排名列表（按分数从高到低）
+  async zRankingList(key: string, start: number = 0, end: number = -1) {
+    return this.redisClient.zRange(key, start, end, {
+      REV: true,
+    });
+  }
+
+  // 添加有序集合的成员（每个成员都有一个分数）
+  async zAdd(key: string, members: Record<string, number>) {
+    const mems: { value: string; score: number }[] = [];
+    for (const key in members) {
+      mems.push({
+        value: key,
+        score: members[key],
+      });
+    }
+    return await this.redisClient.zAdd(key, mems);
+  }
 }
