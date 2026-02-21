@@ -105,4 +105,14 @@ export class ExamService {
       },
     });
   }
+
+  // 回显试卷
+  async find(id: number, userId: number) {
+    return this.prismaService.exam.findUnique({
+      where: {
+        id,
+        createUserId: userId,
+      },
+    });
+  }
 }

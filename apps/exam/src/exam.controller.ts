@@ -68,4 +68,11 @@ export class ExamController {
   unpublish(@UserInfo('userId') userId: number, @Param('id') id: string) {
     return this.examService.unpublish(userId, +id);
   }
+
+  // 回显试卷
+  @Get('find/:id')
+  @RequireLogin()
+  find(@Param('id') id: string, @UserInfo('userId') userId: number) {
+    return this.examService.find(+id, userId);
+  }
 }
