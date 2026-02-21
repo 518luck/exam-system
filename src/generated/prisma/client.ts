@@ -47,3 +47,8 @@ export type User = Prisma.UserModel
  * 
  */
 export type Exam = Prisma.ExamModel
+/**
+ * Model Answer
+ * 
+ */
+export type Answer = Prisma.AnswerModel

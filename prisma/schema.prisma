@@ -22,8 +22,10 @@ model User {
   createTime DateTime @default(now()) // 创建时间
   updateTime DateTime @updatedAt // 更新时间
   exams      Exam[]
+  answers    Answer[]
 }
 
+// 试卷表
 model Exam {
   id         Int      @id @default(autoincrement())
   name       String   @db.VarChar(50) // 考试名称
@@ -37,4 +39,21 @@ model Exam {
   createUser   User @relation(fields: [createUserId], references: [id]) //虚拟字段。它在数据库表中不存在，只存在于你的 Prisma 代码中。
   //fields: [createUserId]：告诉 Prisma，当前模型里的 createUserId 这个字段是用来关联的。
   //references: [id]：告诉 Prisma，它关联的是 User 模型里的 id 字段。
+
+  answers Answer[]
+}
+
+//答卷表
+model Answer {
+  id         Int      @id @default(autoincrement()) //答卷ID
+  content    String   @db.Text //答卷JSON
+  score      Int //分数
+  createTime DateTime @default(now()) //创建时间
+  updateTime DateTime @updatedAt //更新时间
+
+  answererId Int //答题人ID
+  answerer   User @relation(fields: [answererId], references: [id])
+
+  examId Int //试卷ID
+  exam   Exam @relation(fields: [examId], references: [id])
 }

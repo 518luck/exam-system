@@ -52,7 +52,8 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
-  Exam: 'Exam'
+  Exam: 'Exam',
+  Answer: 'Answer'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -97,6 +98,19 @@ export const ExamScalarFieldEnum = {
 export type ExamScalarFieldEnum = (typeof ExamScalarFieldEnum)[keyof typeof ExamScalarFieldEnum]
 
 
+export const AnswerScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  score: 'score',
+  createTime: 'createTime',
+  updateTime: 'updateTime',
+  answererId: 'answererId',
+  examId: 'examId'
+} as const
+
+export type AnswerScalarFieldEnum = (typeof AnswerScalarFieldEnum)[keyof typeof AnswerScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -120,4 +134,11 @@ export const ExamOrderByRelevanceFieldEnum = {
 } as const
 
 export type ExamOrderByRelevanceFieldEnum = (typeof ExamOrderByRelevanceFieldEnum)[keyof typeof ExamOrderByRelevanceFieldEnum]
+
+
+export const AnswerOrderByRelevanceFieldEnum = {
+  content: 'content'
+} as const
+
+export type AnswerOrderByRelevanceFieldEnum = (typeof AnswerOrderByRelevanceFieldEnum)[keyof typeof AnswerOrderByRelevanceFieldEnum]
 
