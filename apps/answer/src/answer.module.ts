@@ -5,11 +5,13 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { PrismaModule } from '@app/prisma';
 import { AuthGuard, CommonModule } from '@app/common';
 import { APP_GUARD } from '@nestjs/core';
+import { ExcelModule } from '@app/excel';
 
 @Module({
   imports: [
     PrismaModule,
     CommonModule,
+    ExcelModule,
     ClientsModule.register([
       {
         name: 'EXAM_SERVICE',
